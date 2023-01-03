@@ -3,8 +3,11 @@ package tacos.web;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
@@ -44,11 +47,15 @@ public class DesignTacoController {
     @GetMapping
     public String showDesignForm(Model model) {
         model.addAttribute("taco", new Taco());
-        return "home";
+        return "design";
     }
 
     @PostMapping
-    public String processTaco(Taco taco) {
+    public String processTaco(@Valid @ModelAttribute("taco") Taco taco, Errors errors) {
+        if (errors.hasErrors()){
+            return "design";
+        }
+
         // Save the taco...
         // We'll do this in chapter 3
         log.info("Processing taco: " + taco);
