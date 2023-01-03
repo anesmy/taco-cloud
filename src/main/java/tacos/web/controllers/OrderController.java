@@ -1,4 +1,4 @@
-package tacos.web;
+package tacos.web.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;

@@ -1,4 +1,4 @@
-package tacos.web;
+package tacos.web.controllers;
 
 import java.util.Arrays;
 import java.util.List;
