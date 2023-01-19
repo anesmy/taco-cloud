@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    generate-unique-name: false
+    name: tacocloud
+    url: jdbc:h2:mem:tacocloud
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+
+    #h2 database url console available only with spring dev tools in the runtime classpath
+    #http://localhost:8080/h2-console
