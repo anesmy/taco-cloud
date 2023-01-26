@@ -13,6 +13,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tacos.data.IngredientRepository;
 import tacos.models.Ingredient;
 import tacos.models.Ingredient.Type;
@@ -50,13 +51,15 @@ public class DesignTacoController {
     }
 
     @PostMapping
-    public String processTaco(@Valid @ModelAttribute("taco") Taco taco, Errors errors) {
-        if (errors.hasErrors()){
+    public String processTaco(RedirectAttributes ra, @Valid @ModelAttribute("taco") Taco taco, Errors errors) {
+        if (errors.hasErrors())
             return "design";
-        }
+
         // Save the taco...
         // We'll do this in chapter 3
+
         log.info("Processing taco: " + taco);
+        ra.addFlashAttribute("taco", taco);
         return "redirect:/orders/current";
     }
 
