@@ -21,7 +21,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
+    public InMemoryUserDetailsManager userDetailsService(PasswordEncoder encoder) {
 
         List<UserDetails> usersList = new ArrayList<>();
 
@@ -32,6 +32,6 @@ public class SecurityConfig {
                 "woody", encoder.encode("password"),
                 List.of(new SimpleGrantedAuthority("ROLE_USER"))));
 
-        return (UserDetailsService) new InMemoryUserDetailsManager(usersList);
+        return new InMemoryUserDetailsManager(usersList);
     }
 }
