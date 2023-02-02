@@ -8,6 +8,14 @@ spring:
     password:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+  security:
+    oauth2:
+      client:
+        registration:
+          facebook:
+            clientId: <facebook client id>
+            clientSecret: <facebook client secret>
+            scope: email, public_profile
 
     #h2 database url console available only with spring dev tools in the runtime classpath
     #http://localhost:8080/h2-console

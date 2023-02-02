@@ -32,18 +32,22 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests()
-                .requestMatchers("/design", "/orders").hasRole("USER")
-                .requestMatchers("/", "/**").permitAll()
+                    .requestMatchers("/design", "/orders").hasRole("USER")
+                    .requestMatchers("/", "/**").permitAll()
 
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/design", true)
-                .loginProcessingUrl("/authenticate")
-                .usernameParameter("user")
-                .passwordParameter("pwd")
+                    .formLogin()
+                        .loginPage("/login")
+                    .defaultSuccessUrl("/design", true)
+                    .loginProcessingUrl("/authenticate")
+                    .usernameParameter("user")
+                    .passwordParameter("pwd")
 
                 .and()
-                .build();
+                    .oauth2Login()
+                        .loginPage("/login")
+
+                .and()
+                    .build();
     }
 }
