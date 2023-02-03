@@ -48,6 +48,10 @@ public class SecurityConfig {
                         .loginPage("/login")
 
                 .and()
+                    .logout()
+                        .logoutSuccessUrl("/")
+
+                .and()
                     .build();
     }
 }
