@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
@@ -22,6 +24,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Table(name="Taco_Order")
 public class TacoOrder  implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,6 +32,9 @@ public class TacoOrder  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @ManyToOne
+    private User user;
 
     private Date placedAt;
 
