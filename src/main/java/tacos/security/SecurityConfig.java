@@ -30,18 +30,18 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
+         http
                 .authorizeHttpRequests()
                     .requestMatchers("/design", "/orders").hasRole("USER")
-                    .requestMatchers("/", "/**").permitAll()
+                    .requestMatchers("/", "/**","/h2-console/**", "/h2-console/").permitAll()
 
                 .and()
                     .formLogin()
                         .loginPage("/login")
                     .defaultSuccessUrl("/design", true)
-                    .loginProcessingUrl("/authenticate")
-                    .usernameParameter("user")
-                    .passwordParameter("pwd")
+                    .loginProcessingUrl("/login")
+                    .usernameParameter("username")
+                    .passwordParameter("password")
 
                 .and()
                     .oauth2Login()
@@ -52,6 +52,9 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/")
 
                 .and()
+                .csrf().disable();
+         http.headers().frameOptions().disable();
+        return http
                     .build();
     }
 }
