@@ -17,5 +17,9 @@ spring:
             clientSecret: <facebook client secret>
             scope: email, public_profile
 
+taco:
+  orders:
+    pageSize: 10
+
     #h2 database url console available only with spring dev tools in the runtime classpath
     #http://localhost:8080/h2-console
