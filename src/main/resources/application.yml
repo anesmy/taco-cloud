@@ -17,6 +17,14 @@ spring:
             clientSecret: <facebook client secret>
             scope: email, public_profile
 
+logging:
+  file:
+    path: /var/logs/
+    name: TacoCloud.log
+  level:
+    root: WARN
+    org.springframework.security: DEBUG
+
 taco:
   orders:
     pageSize: 10
