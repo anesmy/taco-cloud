@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .loginPage("/login")
                     .defaultSuccessUrl("/design", true)
                     .loginProcessingUrl("/login")
+                    .failureUrl("/")
                     .usernameParameter("username")
                     .passwordParameter("password")
 
