@@ -6,8 +6,10 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password:
+
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+
   security:
     oauth2:
       client:
@@ -16,6 +18,10 @@ spring:
             clientId: <facebook client id>
             clientSecret: <facebook client secret>
             scope: email, public_profile
+
+  data:
+    rest:
+      base-path: /data-api
 
 logging:
   level:
