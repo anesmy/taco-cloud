@@ -1,5 +1,6 @@
 package tacos.web.api;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -99,5 +100,13 @@ public class TacoController {
         }
 
         return new ResponseEntity<>(order, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{orderId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOrder(@PathVariable("orderId") Long orderId) {
+        try {
+            orderRepo.deleteById(orderId);
+        } catch (EmptyResultDataAccessException ignored) {}
     }
 }
