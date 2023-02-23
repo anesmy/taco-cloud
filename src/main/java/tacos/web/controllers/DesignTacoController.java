@@ -1,17 +1,23 @@
 package tacos.web.controllers;
 
+import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponentsBuilder;
 import tacos.data.IngredientRepository;
 import tacos.models.Ingredient;
 import tacos.models.Ingredient.Type;
@@ -24,6 +30,45 @@ import tacos.models.Taco;
 public class DesignTacoController {
 
     private final IngredientRepository ingredientRepo;
+
+    private final RestTemplate rest = new RestTemplate();
+
+    // 1st variant of the method
+//    public Ingredient getIngredientById(String ingredientId) {
+//        return rest.getForObject("http://localhost:8080/ingredients/{id}",
+//                Ingredient.class, ingredientId);
+//    }
+
+    // 2nd variant of the method
+//    public Ingredient getIngredientById(String ingredientId) {
+//        Map<String, String> urlVariables = new HashMap<>();
+//        urlVariables.put("id", ingredientId);
+//
+//        return rest.getForObject("http://localhost:8080/ingredients/{id}",
+//                Ingredient.class, urlVariables);
+//    }
+
+    // 3rd variant of the method
+//    public Ingredient getIngredientById(String ingredientId) {
+//        Map<String, String> urlVariables = new HashMap<>();
+//        urlVariables.put("id", ingredientId);
+//        URI url = UriComponentsBuilder
+//                .fromHttpUrl("http://localhost:8080/ingredients/{id}")
+//                .build(urlVariables);
+//
+//        return rest.getForObject(url, Ingredient.class);
+//    }
+
+    // 4th variant of the method
+    public Ingredient getIngredientById(String ingredientId) {
+        ResponseEntity<Ingredient> responseEntity =
+                rest.getForEntity("http://localhost:8080/ingredients/{id}",
+                        Ingredient.class, ingredientId);
+        log.info("Fetched time: " +
+                responseEntity.getHeaders().getDate());
+
+        return responseEntity.getBody();
+    }
 
     @Autowired
     public DesignTacoController(
