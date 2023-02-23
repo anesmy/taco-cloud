@@ -1,9 +1,6 @@
 package tacos.web.controllers;
 
-import java.net.URI;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import jakarta.validation.Valid;
@@ -17,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.UriComponentsBuilder;
 import tacos.data.IngredientRepository;
 import tacos.models.Ingredient;
 import tacos.models.Ingredient.Type;
@@ -47,7 +43,35 @@ public class DesignTacoController {
         rest.delete("http://localhost:8080/ingredients/{id}",
                 ingredient.getId());
     }
-    
+
+    // 1st variant of the method
+    // - returns Ingredient
+//    public Ingredient createIngredient(Ingredient ingredient) {
+//        return rest.postForObject("http://localhost:8080/ingredients",
+//                ingredient, Ingredient.class);
+//    }
+
+    // 2nd variant of the method
+    // - returns location
+//    public java.net.URI createIngredient(Ingredient ingredient) {
+//        return rest.postForLocation("http://localhost:8080/ingredients",
+//                ingredient);
+//    }
+
+
+    // 3rd variant of the method
+    // - returns both location and Ingredient
+    public Ingredient createIngredient(Ingredient ingredient) {
+        ResponseEntity<Ingredient> responseEntity =
+                rest.postForEntity("http://localhost:8080/ingredients",
+                        ingredient,
+                        Ingredient.class);
+        log.info("New resource created at " +
+                responseEntity.getHeaders().getLocation());
+
+        return responseEntity.getBody();
+    }
+
     @Autowired
     public DesignTacoController(
             IngredientRepository ingredientRepo) {
