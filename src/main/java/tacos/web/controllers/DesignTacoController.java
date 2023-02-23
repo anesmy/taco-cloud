@@ -33,43 +33,21 @@ public class DesignTacoController {
 
     private final RestTemplate rest = new RestTemplate();
 
-    // 1st variant of the method
-//    public Ingredient getIngredientById(String ingredientId) {
-//        return rest.getForObject("http://localhost:8080/ingredients/{id}",
-//                Ingredient.class, ingredientId);
-//    }
-
-    // 2nd variant of the method
-//    public Ingredient getIngredientById(String ingredientId) {
-//        Map<String, String> urlVariables = new HashMap<>();
-//        urlVariables.put("id", ingredientId);
-//
-//        return rest.getForObject("http://localhost:8080/ingredients/{id}",
-//                Ingredient.class, urlVariables);
-//    }
-
-    // 3rd variant of the method
-//    public Ingredient getIngredientById(String ingredientId) {
-//        Map<String, String> urlVariables = new HashMap<>();
-//        urlVariables.put("id", ingredientId);
-//        URI url = UriComponentsBuilder
-//                .fromHttpUrl("http://localhost:8080/ingredients/{id}")
-//                .build(urlVariables);
-//
-//        return rest.getForObject(url, Ingredient.class);
-//    }
-
-    // 4th variant of the method
     public Ingredient getIngredientById(String ingredientId) {
-        ResponseEntity<Ingredient> responseEntity =
-                rest.getForEntity("http://localhost:8080/ingredients/{id}",
-                        Ingredient.class, ingredientId);
-        log.info("Fetched time: " +
-                responseEntity.getHeaders().getDate());
-
-        return responseEntity.getBody();
+        return rest.getForObject("http://localhost:8080/ingredients/{id}",
+                Ingredient.class, ingredientId);
     }
 
+    public void updateIngredient(Ingredient ingredient) {
+        rest.put("http://localhost:8080/ingredients/{id}",
+                ingredient, ingredient.getId());
+    }
+
+    public void deleteIngredient(Ingredient ingredient) {
+        rest.delete("http://localhost:8080/ingredients/{id}",
+                ingredient.getId());
+    }
+    
     @Autowired
     public DesignTacoController(
             IngredientRepository ingredientRepo) {
